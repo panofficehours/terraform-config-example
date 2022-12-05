@@ -1,3 +1,3 @@
-fw_ip    = "10.60.100.0"
+fw_ip    = "10.60.0.21"
 username = "panofficehours"
 password = "paloalto1!"
