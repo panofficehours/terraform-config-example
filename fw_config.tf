@@ -90,3 +90,28 @@ resource "panos_nat_rule_group" "test" {
 }
 
 /* Security Policies ------------------------------------------------------ */
+
+resource "panos_security_policy" "DMZ-to-WAN-allow" {
+  rule {
+    name                  = "DMZ-to-WAN-allow"
+    audit_comment         = "Initial config"
+    source_zones          = [panos_zone.dmz.name]
+    source_addresses      = ["any"]
+    source_users          = ["any"]
+    destination_zones     = [panos_zone.wan.name]
+    destination_addresses = ["any"]
+    applications          = ["any"]
+    services              = ["application-default"]
+    categories            = ["any"]
+    action                = "allow"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  depends_on = [
+    panos_zone.dmz,
+    panos_zone.wan
+  ]
+}
